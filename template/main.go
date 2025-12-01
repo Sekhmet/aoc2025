@@ -2,17 +2,17 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"os"
 	"strings"
 )
 
 func solveLevel1(_ []string) {
-	fmt.Println("Solving level 1")
+	log.Println("Solving level 1")
 }
 
 func solveLevel2(_ []string) {
-	fmt.Println("Solving level 2")
+	log.Println("Solving level 2")
 }
 
 func readInputFile(path string) ([]string, error) {
@@ -32,7 +32,7 @@ func main() {
 
 	input, err := readInputFile(*inputFile)
 	if err != nil {
-		fmt.Println("Error reading input file:", err)
+		log.Println("Error reading input file:", err)
 		os.Exit(1)
 	}
 
@@ -42,7 +42,7 @@ func main() {
 	case 2:
 		solveLevel2(input)
 	default:
-		fmt.Println("Unknown level")
+		log.Println("Unknown level")
 		os.Exit(1)
 	}
 
