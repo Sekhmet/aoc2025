@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/Sekhmet/aoc2025/toolkit"
 	"log"
 	"os"
 	"strconv"
@@ -13,16 +14,6 @@ const (
 	STARTING_POSITION = 50
 	CLICKS            = 100
 )
-
-func pmod(x, d int) int {
-	x = x % d
-
-	if x < 0 {
-		return x + d
-	}
-
-	return x
-}
 
 func solveLevel1(input []string) {
 	log.Println("Solving level 1")
@@ -51,7 +42,7 @@ func solveLevel1(input []string) {
 			log.Printf("Unknown direction: %s\n", direction)
 		}
 
-		p = pmod(p, CLICKS)
+		p = toolkit.Pmod(p, CLICKS)
 
 		if p == 0 {
 			c += 1
@@ -83,7 +74,7 @@ func solveLevel2(input []string) {
 		switch direction {
 		case "L":
 			for range distance {
-				p = pmod(p-1, CLICKS)
+				p = toolkit.Pmod(p-1, CLICKS)
 
 				if p == 0 {
 					c += 1
@@ -91,7 +82,7 @@ func solveLevel2(input []string) {
 			}
 		case "R":
 			for range distance {
-				p = pmod(p+1, CLICKS)
+				p = toolkit.Pmod(p+1, CLICKS)
 
 				if p == 0 {
 					c += 1
