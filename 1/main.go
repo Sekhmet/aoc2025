@@ -3,16 +3,106 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
-func solveLevel1(_ []string) {
-	fmt.Println("Solving level 1")
+const (
+	STARTING_POSITION = 50
+	CLICKS            = 100
+)
+
+func pmod(x, d int) int {
+	x = x % d
+
+	if x < 0 {
+		return x + d
+	}
+
+	return x
 }
 
-func solveLevel2(_ []string) {
-	fmt.Println("Solving level 2")
+func solveLevel1(input []string) {
+	log.Println("Solving level 1")
+
+	p := STARTING_POSITION
+	c := 0
+
+	for _, line := range input {
+		if line == "" {
+			continue
+		}
+
+		direction, distanceStr := line[:1], line[1:]
+		distance, err := strconv.Atoi(distanceStr)
+		if err != nil {
+			fmt.Println("Error parsing distance:", err)
+			continue
+		}
+
+		switch direction {
+		case "L":
+			p -= distance
+		case "R":
+			p += distance
+		default:
+			log.Printf("Unknown direction: %s\n", direction)
+		}
+
+		p = pmod(p, CLICKS)
+
+		if p == 0 {
+			c += 1
+		}
+	}
+
+	log.Printf("Final position: %d, Number of 0 positions: %d\n", p, c)
+}
+
+func solveLevel2(input []string) {
+	log.Println("Solving level 2")
+
+	p := STARTING_POSITION
+	c := 0
+
+	for _, line := range input {
+		if line == "" {
+			continue
+		}
+
+		direction, distanceStr := line[:1], line[1:]
+		distance, err := strconv.Atoi(distanceStr)
+		if err != nil {
+			fmt.Println("Error parsing distance:", err)
+			continue
+		}
+
+		// Good thing Go is fast, I gave up doing math
+		switch direction {
+		case "L":
+			for range distance {
+				p = pmod(p-1, CLICKS)
+
+				if p == 0 {
+					c += 1
+				}
+			}
+		case "R":
+			for range distance {
+				p = pmod(p+1, CLICKS)
+
+				if p == 0 {
+					c += 1
+				}
+			}
+		default:
+			log.Printf("Unknown direction: %s\n", direction)
+		}
+	}
+
+	log.Printf("Final position: %d, Number of 0 positions: %d\n", p, c)
 }
 
 func readInputFile(path string) ([]string, error) {
@@ -32,7 +122,7 @@ func main() {
 
 	input, err := readInputFile(*inputFile)
 	if err != nil {
-		fmt.Println("Error reading input file:", err)
+		log.Println("Error reading input file:", err)
 		os.Exit(1)
 	}
 
@@ -42,7 +132,7 @@ func main() {
 	case 2:
 		solveLevel2(input)
 	default:
-		fmt.Println("Unknown level")
+		log.Println("Unknown level")
 		os.Exit(1)
 	}
 
