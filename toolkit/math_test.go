@@ -14,3 +14,12 @@ func TestPmod(t *testing.T) {
 		t.Errorf("Pmod(6, 5) = %d; want 1", got)
 	}
 }
+
+func TestFindMaxIndex(t *testing.T) {
+	input := []int{23, 55, 224, 561, 22}
+
+	got := FindMaxIndex(input)
+	if got != 3 {
+		t.Errorf("FindMaxIndex(%v) = %d; want 3", input, got)
+	}
+}
